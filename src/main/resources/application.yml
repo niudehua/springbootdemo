@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/springbootdemo?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: a19920213
+    password: 123456
     hikari:
       auto-commit: true
       #空闲连接超时时长
@@ -22,6 +22,8 @@ spring:
   servlet:
     multipart:
       max-file-size: -1
+  freemarker:
+    check-template-location: false
 
 logging:
   level:

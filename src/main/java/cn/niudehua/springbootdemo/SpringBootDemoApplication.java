@@ -9,8 +9,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  * @author deng
  */
 @SpringBootApplication
-@MapperScan("cn.niudehua.springbootdemo.mapper")
 @ServletComponentScan
+@MapperScan(basePackages = "cn.niudehua.springbootdemo.mapper")
 public class SpringBootDemoApplication {
 
     public static void main(String[] args) {
@@ -18,3 +18,4 @@ public class SpringBootDemoApplication {
     }
 
 }
+

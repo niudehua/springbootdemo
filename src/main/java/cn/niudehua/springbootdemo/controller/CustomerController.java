@@ -49,11 +49,6 @@ public class CustomerController {
     @Resource
     private CustomerService customerService;
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello easyExcel";
-    }
-
     /**
      * POST /api/customers CustomerDTO
      * 新建客户

@@ -1,6 +1,8 @@
 package cn.niudehua.springbootdemo.util;
 
 /**
+ * 正则表达式
+ *
  * @author deng
  */
 public class ExcelPatternMsg {

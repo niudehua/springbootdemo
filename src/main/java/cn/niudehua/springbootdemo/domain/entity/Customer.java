@@ -1,6 +1,7 @@
 package cn.niudehua.springbootdemo.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -53,7 +54,7 @@ public class Customer {
     /**
      * 手机号
      */
-    @TableField(value = "phone")
+    @TableField(value = "phone", updateStrategy = FieldStrategy.NOT_EMPTY)
     private String phone;
 
     /**

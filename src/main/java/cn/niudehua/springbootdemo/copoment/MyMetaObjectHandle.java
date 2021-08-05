@@ -16,36 +16,40 @@ import java.util.function.Supplier;
 @Component
 @Slf4j
 public class MyMetaObjectHandle implements MetaObjectHandler {
+
+    public static final String CREATED_TIME = "createdTime";
+    public static final String VERSION = "version";
+    public static final String MODIFIED_TIME = "modifiedTime";
+
     @Override
     public void insertFill(MetaObject metaObject) {
-        if (metaObject.hasGetter("createdTime")) {
-            if (Objects.isNull(getFieldValByName("createdTime", metaObject))) {
-                log.info("~~~insertFill~~~createdTime~~~");
-                setFieldValByName("createdTime", LocalDateTime.now(), metaObject);
-            }
+        if (metaObject.hasGetter(CREATED_TIME)
+                && Objects.isNull(getFieldValByName(CREATED_TIME, metaObject))) {
+            log.info("~~~insertFill~~~createdTime~~~");
+            setFieldValByName(CREATED_TIME, LocalDateTime.now(), metaObject);
         }
-        if (metaObject.hasGetter("version")) {
+        if (metaObject.hasGetter(VERSION)) {
             log.info("~~~insertFill~~~version~~~");
-            setFieldValByName("version", 1L, metaObject);
+            setFieldValByName(VERSION, 1L, metaObject);
         }
 
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        if (metaObject.hasGetter("modifiedTime")) {
-            if (Objects.isNull(getFieldValByName("modifiedTime", metaObject))) {
-                log.info("~~~updateFill~~~modifiedTime~~~");
-                setFieldValByName("modifiedTime", LocalDateTime.now(), metaObject);
-            }
+        if (metaObject.hasGetter(MODIFIED_TIME)
+                && Objects.isNull(getFieldValByName(MODIFIED_TIME, metaObject))) {
+            log.info("~~~updateFill~~~modifiedTime~~~");
+            setFieldValByName(MODIFIED_TIME, LocalDateTime.now(), metaObject);
         }
     }
 
     /**
      * 重写填充策略，有值（且不为null）不覆盖
-     * @param metaObject  metaObject
-     * @param fieldName fieldName
-     * @param fieldVal fieldVal
+     *
+     * @param metaObject metaObject
+     * @param fieldName  fieldName
+     * @param fieldVal   fieldVal
      * @return MetaObjectHandler
      */
     @Override

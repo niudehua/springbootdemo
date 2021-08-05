@@ -1,14 +1,16 @@
 package cn.niudehua.springbootdemo.mapper;
 
 import cn.niudehua.springbootdemo.domain.entity.Customer;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -23,11 +25,25 @@ class CustomerMapperTest {
     private CustomerMapper customerMapper;
 
     @Test
-     void findTest() {
-        LambdaQueryWrapper<Customer> query = Wrappers.lambdaQuery();
-        query.like(Customer::getUsername, "牛德滑");
-        List<Customer> customers = customerMapper.selectList(query);
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    void findTest() {
+        List<Customer> customers = customerMapper.selectList(null);
+        log.info(JSON.toJSONString(customers));
         Assertions.assertNotNull(customers.get(0));
     }
 
+    @Test
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    void test() {
+        Customer customer = new Customer();
+        customer.setUsername("牛德滑");
+        customer.setPassword("123456");
+        customer.setEmail("123456@qq.com");
+        customer.setAge(18);
+        customer.setPhone("13871293422");
+        customer.setBirthday(LocalDate.now());
+        customerMapper.insert(customer);
+        List<Customer> customers = customerMapper.selectList(null);
+        log.info(JSON.toJSONString(customers));
+    }
 }

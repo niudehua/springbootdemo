@@ -25,16 +25,16 @@ import java.io.OutputStream;
 @Slf4j
 @Service("localFileServiceImpl")
 public class LocalFileServiceImpl implements FileService {
-    private static final String BUCKET = "uploads";
+    private static final String BUCKET = "uploads/";
 
     @Override
     public void upload(InputStream inputStream, String filename) {
         // 拼接文件存储路径
-        String storagePath = BUCKET + "/" + filename;
+        String storagePath = BUCKET + filename;
         // JDK8 TWR不能关闭外部资源 用内部资源接收
         try (
                 InputStream innerInputStream = inputStream;
-                OutputStream outputStream = new FileOutputStream(new File(storagePath));
+                OutputStream outputStream = new FileOutputStream(storagePath);
         ) {
             byte[] buffer = new byte[1024];
             int len;
@@ -46,7 +46,6 @@ public class LocalFileServiceImpl implements FileService {
             log.error("文件上传失败", e);
             throw new BizException(ErrorCodeEnum.FILE_UPLOAD_ERROR, e);
         }
-
     }
 
     @Override

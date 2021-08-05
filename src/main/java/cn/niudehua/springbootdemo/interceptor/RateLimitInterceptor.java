@@ -29,9 +29,10 @@ public class RateLimitInterceptor implements HandlerInterceptor {
         if (!RATE_LIMITER.tryAcquire()) {
             log.error("系统已被限流");
             throw new BizException(ErrorCodeEnum.RATE_LIMITER_ERROR);
+        } else {
+            log.info("系统未被限流，正常执行");
+            return true;
         }
-        log.info("系统未被限流，正常执行");
-        return true;
     }
 
 }

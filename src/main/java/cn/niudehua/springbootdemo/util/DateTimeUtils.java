@@ -11,21 +11,19 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.time.temporal.Temporal;
 
-
 /**
- * 日期工具
+ * DateTime 工具类
  *
- * @author LeiXinXin
- * @date 2019/12/10
+ * @author deng
  */
 public class DateTimeUtils {
     /**
      * 标准日期格式 {@link DateTimeFormatter}：yyyyMMddHHmmssSSS
      */
     public static final DateTimeFormatter PURE_DATETIME_MS_FORMATTER = new DateTimeFormatterBuilder()
-        .appendPattern("yyyyMMddHHmmss")
-        .appendValue(ChronoField.MILLI_OF_SECOND, 3)
-        .toFormatter();
+            .appendPattern("yyyyMMddHHmmss")
+            .appendValue(ChronoField.MILLI_OF_SECOND, 3)
+            .toFormatter();
     /**
      * 标准日期格式 {@link DateTimeFormatter}：yyyyMMdd
      */
@@ -46,37 +44,30 @@ public class DateTimeUtils {
      * 标准日期格式：HH:mm
      */
     public final static String NORM_TIME_PATTERN = "HH:mm";
-
     /**
      * 标准日期格式 {@link DateTimeFormatter} HH:mm
      */
     public static final DateTimeFormatter NORM_TIME_FORMATTER = DateTimeFormatter.ofPattern(NORM_TIME_PATTERN);
-
     /**
      * 标准日期时间格式，精确到秒 {@link DateTimeFormatter}：yyyy-MM-dd HH:mm:ss
      */
     public static final DateTimeFormatter NORM_DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     /**
      * 横线分隔日期时间格式：yyyy-MM-dd-HH-mm-ss-
      */
     public final static String HORIZONTAL_LINE_PATTERN = "yyyy-MM-dd-HH-mm-ss-";
-
     /**
      * 横线分隔日期时间格式，精确到秒 {@link DateTimeFormatter}：yyyy-MM-dd-HH-mm-ss-
      */
     public static final DateTimeFormatter HORIZONTAL_LINE_DATETIME_FORMATTER = DateTimeFormatter.ofPattern(HORIZONTAL_LINE_PATTERN);
-
     /**
      * 上海时区格式
      */
     public static final String CTT = ZoneId.SHORT_IDS.get("CTT");
-
     /**
      * 上海时区
      */
     public static final ZoneId CTT_ZONE_ID = ZoneId.of(CTT);
-
 
     private DateTimeUtils() {
     }
@@ -289,7 +280,6 @@ public class DateTimeUtils {
         return plusDays(localDateTime, 1);
     }
 
-
     /**
      * 增加一天时间
      *
@@ -353,7 +343,6 @@ public class DateTimeUtils {
         final LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
         return plusMinutes(localDateTime, 1);
     }
-
 
     /**
      * 增加1分钟
@@ -437,7 +426,6 @@ public class DateTimeUtils {
     public static LocalDateTime minusOneMinutes(LocalDateTime localDateTime, LocalTime localTime) {
         return minusOneMinutes(localDateTime.toLocalDate(), localTime);
     }
-
 
     /**
      * 减少 1 分钟

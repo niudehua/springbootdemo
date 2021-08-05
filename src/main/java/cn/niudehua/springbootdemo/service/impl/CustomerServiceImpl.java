@@ -20,8 +20,6 @@ import cn.niudehua.springbootdemo.util.EasyExcelValidatorUtils;
 import cn.niudehua.springbootdemo.util.InsertValidationGroup;
 import cn.niudehua.springbootdemo.util.UpdateValidationGroup;
 import cn.niudehua.springbootdemo.util.ValidatorUtils;
-import com.alibaba.excel.EasyExcelFactory;
-import com.alibaba.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -53,8 +51,9 @@ import java.util.stream.Stream;
 
 
 /**
+ * 客户服务实现类
+ *
  * @author deng
- * @datetime 2020/11/26 下午10:59
  */
 @Service
 @Slf4j
@@ -132,7 +131,6 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             }).collect(Collectors.toList());
             if (CollectionUtils.isNotEmpty(collect) && Integer.sum(collect.size(), list.size()) <= threshold) {
                 list.addAll(collect);
-
             }
 
             // 保存校验成功的数据集
@@ -145,7 +143,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
                     }).collect(Collectors.toList()));
         };
 
-        EasyExcelUtils.webReadExcel(file, consumer, CustomerImportExcel.class, threshold);
+        EasyExcelUtils.webReadExcel(file, EasyExcelUtils.getListener(CustomerImportExcel.class, consumer, threshold), CustomerImportExcel.class, 0);
 
         if (CollectionUtils.isNotEmpty(list)) {
             // 导出校验失败的错误数据集
@@ -173,11 +171,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     /**
      * 执行数据库查询和Excel 导出，将数据写入 outputStream中
      *
-     * @param outputStream
-     * @param queryDTO
+     * @param outputStream outputStream
+     * @param queryDTO     queryDTO
      */
     private void exportExcel(OutputStream outputStream, CustomerQueryDTO queryDTO) {
-
         PageQuery<CustomerQueryDTO> pageQuery = new PageQuery<>();
         pageQuery.setPageSize(1);
         pageQuery.setQuery(queryDTO);
@@ -196,8 +193,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
                     }).collect(Collectors.toList());
 
             log.info("开始分页导出，第{}页", pageNo);
-            EasyExcelUtils.writerExcel(exportExcels,CustomerExportExcel.class
-            ,"第"+pageNo+"页",outputStream);
+            EasyExcelUtils.writerExcel(exportExcels, CustomerExportExcel.class
+                    , "第" + pageNo + "页", outputStream);
 
         } while (pageResult.getPageNum() > pageNo);
         log.info("导出完成，共导出了{}页", pageNo);
